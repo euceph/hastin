@@ -1,35 +1,52 @@
-[tool.poetry]
-name = "dolphie"
-version = "6.11.4"
+[project]
+name = "hastin"
+version = "0.0.1"
+description = "PostgreSQL TUI monitoring dashboard"
 license = "GPL-3.0-or-later"
-description = "Your single pane of glass for real-time analytics into MySQL/MariaDB & ProxySQL"
-authors = ["Charles Thompson <01charles.t@gmail.com>"]
-readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "rich>=14.2.0",
+    "psycopg[binary,pool]>=3.2",
+    "packaging>=25.0",
+    "requests>=2.32.5",
+    "sqlparse>=0.5.5",
+    "textual>=6.11.0",
+    "plotext>=5.3.2",
+    "zstandard>=0.25.0",
+    "loguru>=0.7.3",
+    "orjson>=3.10.15",
+    "psutil>=7.1.3",
+]
 
-[tool.poetry.dependencies]
-python = "^3.9"
-rich = "^14.2.0"
-pymysql = "^1.1.2"
-myloginpath = "^0.0.4"
-packaging = "^25.0"
-requests = "^2.32.5"
-sqlparse = "^0.5.5"
-textual = "^6.11.0"
-plotext = "^5.3.2"
-zstandard = "^0.25.0"
-loguru = "^0.7.3"
-orjson = "^3.10.15"
-psutil = "^7.1.3"
+[project.optional-dependencies]
+aws = ["boto3>=1.34"]
+gcp = ["google-cloud-monitoring>=2.18"]
+azure = ["azure-monitor-query>=1.2", "azure-identity>=1.15"]
+cloud = [
+    "boto3>=1.34",
+    "google-cloud-monitoring>=2.18",
+    "azure-monitor-query>=1.2",
+    "azure-identity>=1.15",
+]
 
-[tool.poetry.group.dev.dependencies]
-pytest = "~8.3.5"
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+    "ruff>=0.9.0",
+]
+
+[project.scripts]
+hastin = "hastin.App:main"
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.poetry.scripts]
-dolphie = "dolphie.App:main"
+[tool.uv]
+package = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["hastin"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -66,39 +83,37 @@ select = [
 
 ignore = [
     # --- Formatter compatibility ---
-    "ISC001",    # Implicit string concatenation (conflicts with formatter)
+    "ISC001",    # Implicit string concatenation
 
     # --- Intentional naming conventions ---
-    "N811",      # Constant imported as non-constant (1 violation - intentional panel naming)
-    "N815",      # Mixed case variable in class scope (2 violations - cnt_INFs variable name)
-    "N818",      # Exception name should end with Error (1 violation - ManualException is intentional)
-    "N999",      # Invalid module name (Steps - prefer capitalized for this module)
+    "N811",      # Constant imported as non-constant
+    "N815",      # Mixed case variable in class scope
+    "N818",      # Exception name should end with Error
+    "N999",      # Invalid module name
 
     # --- Code patterns requiring refactoring ---
-    "ARG002",    # Unused method argument (required by interface)
-    "ARG005",    # Unused lambda argument (required by yaml representer)
-    "B007",      # Unused loop control variable (15 violations - common enumerate/zip pattern)
-    "SIM102",    # Collapsible if statements (6 violations - nested ifs sometimes clearer)
-    "SIM105",    # Use contextlib.suppress (2 violations - try-except-pass sometimes clearer)
-    "SIM115",    # Use context manager (minor improvement)
-    "SIM117",    # Combine with statements (sometimes nested is clearer)
-    "UP017",     # Use datetime.UTC alias (only available in Python 3.11+, we support 3.9+)
-    "UP007",     # Use X | Y for type unions (runtime type aliases need Union[] for Python 3.9)
+    "ARG002",    # Unused method argument
+    "ARG005",    # Unused lambda argument
+    "B007",      # Unused loop control variable
+    "SIM102",    # Collapsible if statements
+    "SIM105",    # Use contextlib.suppress
+    "SIM115",    # Use context manager
+    "SIM117",    # Combine with statements
 
     # --- Async patterns ---
-    "ASYNC110",  # Async busy wait (1 violation - intentional polling pattern)
-    "ASYNC230",  # Blocking open in async (1 violation - would require extensive refactoring)
+    "ASYNC110",  # Async busy wait
+    "ASYNC230",  # Blocking open in async
 
     # --- Annotation ignores ---
     "ANN001",    # Missing type annotation for function argument
-    "ANN002",    # Missing type annotation for *args (2 violations)
+    "ANN002",    # Missing type annotation for *args
     "ANN003",    # Missing type annotation for **kwargs
     "ANN201",    # Missing return type for public function
     "ANN202",    # Missing return type for private function
     "ANN204",    # Missing return type for special method
     "ANN206",    # Missing return type for classmethod
 
-    # --- Documentation ignores (too noisy for existing codebase) ---
+    # --- Documentation ignores ---
     "D100",      # Missing docstring in public module
     "D101",      # Missing docstring in public class
     "D102",      # Missing docstring in public method
@@ -110,13 +125,13 @@ ignore = [
     "D417",      # Missing argument description in docstring
 ]
 
-# Per-file ignores - allow print and missing annotations in tests
+# Per-file ignores
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["T20", "ANN", "D"]
 
 [tool.ruff.lint.isort]
 section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
-known-first-party = ["dolphie"]
+known-first-party = ["hastin"]
 
 [tool.ruff.lint.flake8-pytest-style]
 fixture-parentheses = false
