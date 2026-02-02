@@ -9,17 +9,6 @@
 
 <p align="center"><em>hastin is a fork of and would not be possible without Charles Thompson's <a href="https://github.com/charles-001/dolphie">dolphie</a>, an excellent MySQL/MariaDB/ProxySQL tool built with Textual.</em></p>
 
-## Features
-
-- Real-time PostgreSQL monitoring with configurable refresh intervals
-- Multi-tab support for monitoring multiple databases simultaneously
-- PgBouncer monitoring (standalone and combined modes)
-- SSH tunnel support for secure remote connections
-- Record & replay functionality for incident analysis
-- Daemon mode for continuous background monitoring
-- 16+ cloud provider detection and support
-- System metrics collection from multiple sources
-
 ## Installation
 
 Requires **Python 3.11+**
