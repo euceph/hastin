@@ -64,7 +64,7 @@ hastin pgbouncer://user:password@localhost:6432/pgbouncer
 hastin -h localhost -P 5432 -u postgres -d mydb --pgbouncer-host localhost --pgbouncer-port 6432
 
 # Connect via SSH tunnel
-hastin -h dbserver -P 5432 -u postgres -d mydb --ssh-host jumpbox.example.com --ssh-user admin
+hastin -h dbserver -P 5432 -u postgres -d mydb --ssh jumpbox.example.com --ssh-user admin
 ```
 
 ## Usage
@@ -94,7 +94,7 @@ PgBouncer options:
   --pgbouncer-password  PgBouncer password (defaults to main password)
 
 SSH tunnel options:
-  --ssh-host            SSH server hostname
+  --ssh                 SSH host for tunneling (can be alias from ~/.ssh/config)
   --ssh-port            SSH server port [default: 22]
   --ssh-user            SSH username
   --ssh-key             Path to SSH private key
@@ -259,16 +259,16 @@ Connect securely through a jump host:
 ```shell
 # Basic SSH tunnel
 hastin -h dbserver -P 5432 -u postgres -d mydb \
-  --ssh-host jumpbox.example.com --ssh-user admin
+  --ssh jumpbox.example.com --ssh-user admin
 
 # With custom SSH key
 hastin -h dbserver -P 5432 -u postgres -d mydb \
-  --ssh-host jumpbox.example.com --ssh-user admin --ssh-key ~/.ssh/id_rsa
+  --ssh jumpbox.example.com --ssh-user admin --ssh-key ~/.ssh/id_rsa
 
 # Tunnel for both PostgreSQL and PgBouncer
 hastin -h dbserver -P 5432 -u postgres -d mydb \
   --pgbouncer-host dbserver --pgbouncer-port 6432 \
-  --ssh-host jumpbox.example.com --ssh-user admin
+  --ssh jumpbox.example.com --ssh-user admin
 ```
 
 ## System Metrics
@@ -287,7 +287,7 @@ Metrics are collected from:
 
 ## Configuration File
 
-Create `~/.hastin.cnf` or `/etc/hastin/hastin.cnf`:
+Create `~/.hastin.conf` or `/etc/hastin/hastin.conf`:
 
 ```ini
 [hastin]

@@ -531,7 +531,7 @@ class HastinApp(App):
                 if not self.config.daemon_mode:
                     self.run_worker_replicas(self.tab_manager.active_tab.id)
 
-        # self.check_for_new_version()  # enable when published to pypi
+        self.check_for_new_version()
 
         self.set_timer(5.0, self._monitor_terminal_disconnect)
 
