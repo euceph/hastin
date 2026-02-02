@@ -1,0 +1,635 @@
+/* --- Global & Defaults --- */
+/* Green Theme based on #01732d */
+* {
+    scrollbar-background: #051a0a;
+    scrollbar-background-hover: #051a0a;
+    scrollbar-background-active: #051a0a;
+
+    scrollbar-color: #0e4020;
+    scrollbar-color-hover: #12502a;
+    scrollbar-color-active: #1a6838;
+
+    color: #e9e9e9;
+}
+
+#_default, CommandScreen, EventLog {
+    background: #020a04;
+}
+
+Screen.-maximized-view {
+    height: 100%;
+
+    & .metric_graph_container,
+    & .metric_graph_container2,
+    & TabPane {
+        height: 1fr !important;
+    }
+    & Tabs {
+        margin-top: 0;
+    }
+    & DataTable {
+        height: 100% !important;
+        max-height: 100% !important;
+    }
+}
+
+/* --- Layout Widgets --- */
+Graph { height: 100%; }
+Horizontal { height: auto; }
+
+Rule {
+    color: #0d5024;
+    margin: 0;
+}
+
+Center > * {
+    /* General spacing for items inside Center layouts */
+    margin-bottom: 0;
+}
+
+/* --- Data Tables --- */
+DataTable {
+    background: #031208;
+    overflow-x: hidden;
+    max-height: 40;
+
+    &:focus {
+        background-tint: #031208;
+    }
+    & > .datatable--odd-row {
+        background: #04180a;
+    }
+    & > .datatable--even-row {
+        background: #031208;
+    }
+    & > .datatable--header {
+        background: transparent;
+        color: #a8e4b8;
+    }
+}
+
+/* Horizontal scrolling specific tables */
+#pfs_metrics_file_io_datatable,
+#pfs_metrics_table_io_waits_datatable {
+    overflow-x: auto;
+}
+
+/* --- Indicators & Overlays --- */
+LoadingIndicator, SpinnerWidget {
+    color: #4dc878;
+    height: auto;
+    content-align: center middle;
+}
+
+LoadingIndicator { margin-top: 3; }
+
+ModalScreen {
+    background: #020a04 70%;
+    align: center middle;
+    height: 40;
+    color: #1a7840;
+}
+
+Toast {
+    width: auto;
+    max-width: 50%;
+    background: #062810;
+    border-right: wide #042008;
+
+    &.-information { border-left: wide #3cb870; }
+    &.-warning     { border-left: wide #f0e357; }
+
+    &.-success {
+        border-left: wide #3df28a;
+        & .toast--title { color: #4cf898; }
+    }
+
+    &.-error {
+        border-left: wide #f05757;
+        & .toast--title { color: #ed6363; }
+    }
+}
+
+/* --- Command Palette & Input --- */
+CommandPalette {
+    background: #020a04 70%;
+
+    & > Vertical {
+        background: #020a04;
+    }
+    & #--input {
+        border-top: hkey #063014;
+    }
+}
+
+CommandList {
+    text-style: none;
+    border-bottom: hkey #063014;
+    max-height: 80vh;
+
+    & > .option-list--option {
+        text-style: none;
+        padding: 0;
+    }
+    /* Combine hover and highlight states */
+    & > .option-list--option-highlighted,
+    & > .option-list--option-hover {
+        color: #90e0a8;
+        background: #041c0a;
+        text-style: bold;
+    }
+}
+
+CommandInput, CommandInput:focus {
+    background: #020a04 !important;
+    width: 1fr !important;
+    border: blank !important;
+    padding-left: 0 !important;
+    margin: 0 1 !important;
+}
+
+AutoComplete {
+    & AutoCompleteList {
+        background: #041408;
+        border: none !important;
+        border-left: wide #0b5028;
+        margin: 0;
+        width: auto;
+        height: auto;
+        max-height: 100%;
+
+        &:hover {
+            border: none !important;
+            border-left: wide #0b5028;
+        }
+
+        & > .option-list--option-hover {
+            background: #0a3818;
+            color: #a0f0b8;
+            text-style: bold;
+        }
+
+        & > .option-list--option-highlighted {
+            background: #062810;
+            color: #70c888;
+            text-style: bold;
+        }
+    }
+
+    & .autocomplete--highlight-match {
+        color: #50d880;
+        background: #0b5028;
+        text-style: bold;
+    }
+
+    & .option-list--option-highlighted {
+        background: #062810;
+        color: #70c888;
+        text-style: bold;
+    }
+}
+
+/* --- Top Bar --- */
+TopBar {
+    dock: top;
+    background: #042810;
+    height: 1;
+    layout: horizontal;
+
+    & #topbar_title {
+        width: 15%;
+        content-align: left middle;
+    }
+    & #topbar_host {
+        color: #98dca8;
+        width: 70%;
+        content-align: center middle;
+        text-style: bold;
+    }
+    & #topbar_help {
+        width: 15%;
+        content-align: right middle;
+        color: #50b070;
+    }
+}
+
+/* --- Dashboard & Replay --- */
+#metric_graphs_title,
+#replication_title,
+#replicas_title,
+#group_replication_title,
+#clusterset_title {
+    color: #98dca8;
+    text-style: bold;
+    width: 100%;
+    content-align: center middle;
+}
+
+#statements_summary_radio_set {
+    margin-bottom: 1;
+}
+
+.dashboard {
+    height: auto;
+    width: 100%;
+
+    & > Center {
+        height: auto;
+        width: 100%;
+        layout: horizontal;
+        content-align: center middle;
+
+        & > * {
+            content-align: center top;
+            height: 11;
+            width: auto;
+            padding: 0 1;
+        }
+    }
+}
+
+.dashboard_replay {
+    height: auto;
+    width: 65;
+    content-align: center middle;
+    align: center middle;
+}
+
+#dashboard_replay_progressbar {
+    width: 100%;
+
+    & > #bar { width: 65; }
+    & > #bar > .bar--bar {
+        color: #1a8a48;
+        background: #0c3818;
+    }
+    & > #bar > .bar--complete {
+        color: #3df28a;
+    }
+}
+
+.replay_buttons {
+    height: auto;
+    width: 65;
+    background: #062810;
+    border-top: tall #042810;
+    border-bottom: tall #042810;
+}
+
+.replay_button {
+    text-style: none;
+    background: transparent;
+    background-tint: transparent;
+    border: none;
+    tint: transparent 0%;
+
+    /* Combine hover and focus */
+    &:hover, &:focus {
+        background: transparent;
+        color: #1a8a48;
+        text-style: bold;
+        border: none;
+        tint: transparent 0%;
+    }
+
+    &.-active {
+        color: #1a8a48;
+        text-style: bold;
+        background: transparent;
+        border: none;
+        tint: transparent 0%;
+    }
+}
+
+/* --- Panels (Graphs, Replication, Replicas) --- */
+.panel_container {
+    height: auto;
+    width: 100%;
+    background: #031208;
+    border: tall #062c12;
+    margin-bottom: 1;
+
+    & > Label {
+        width: 100%;
+        color: #98dca8;
+        text-style: bold;
+        content-align: center middle;
+    }
+    & #statements_summary_info {
+        content-align: left middle;
+        margin-left: 1;
+    }
+}
+
+#panel_graphs, #panel_replication {
+    height: auto;
+    & Tabs { margin-top: 0; }
+}
+
+#panel_graphs {
+    & .metric_graph_container,
+    & .metric_graph_container2  {
+        height: 15;
+    }
+    & .metric_graph_stats {
+        width: 100%;
+        content-align: center middle;
+    }
+}
+
+.replication {
+    height: auto;
+    margin-bottom: 1;
+
+    & > Label {
+        width: 100%;
+        content-align: center middle;
+    }
+    & > Center {
+        height: auto;
+        layout: horizontal;
+        content-align: center middle;
+
+        & > ScrollableContainer {
+            content-align: center top;
+            background: #031208;
+            border: tall #062c12;
+            height: auto;
+            max-height: 18;
+        }
+        & > .replication_status { max-width: 85; }
+        & > .replication_thread_applier { max-width: 105; }
+    }
+}
+
+.replicas, .group_replication {
+    height: auto;
+    margin-bottom: 1;
+
+    & > Container {
+        height: auto;
+        layout: grid;
+        grid-size: 2;
+        grid-gutter: 1 0;
+
+        & > ScrollableContainer  {
+            background: #031208;
+            border: tall #062c12;
+            height: auto;
+            max-height: 20;
+        }
+    }
+    & > Label {
+        width: 100%;
+        content-align: center middle;
+    }
+    & > LoadingIndicator {
+        margin-top: 0;
+    }
+}
+
+.group_replication > Container {
+    grid-size: 3;
+}
+
+/* --- Tabs --- */
+TabPane { padding: 0; }
+Tabs {
+    margin-top: 1;
+
+    &:focus {
+        & .-active { background: #020a04; }
+        & .underline--bar { color: #98f0b0; }
+    }
+}
+
+Tab {
+    /* Consolidate all bold states */
+    &:focus, &:hover, &.-active, &.-active:focus {
+        text-style: bold;
+    }
+}
+
+Underline > .underline--bar {
+    background: #083818;
+    color: #3dc870;
+}
+
+/* --- Form Controls --- */
+
+TextArea, Input, Select, OptionList {
+    background: transparent;
+    border: heavy #0a3418;
+    border-title-color: #90d8a0;
+    margin: 0 1 0 1;
+    width: 100%;
+
+    &:hover {
+        border: heavy #0d5024;
+    }
+
+    &:focus {
+        border: heavy #12703a;
+        border-title-color: #98f0b0;
+        background-tint: transparent;
+    }
+
+    & > .input--placeholder {
+        color: #308050;
+    }
+}
+
+
+SelectCurrent {
+    background: transparent;
+    border: none;
+
+    & Static#label { color: #2a6842; }
+    &.-has-value Static#label { color: #e9e9e9; }
+}
+
+Select > OptionList {
+    background: #020f06;
+    border: round #0a3418;
+    width: 100%;
+    height: 15;
+    margin: 0;
+
+    &:focus {
+        margin: 0;
+        height: auto;
+        max-height: 15;
+        background: transparent;
+        border: round #12703a;
+    }
+
+    /* Option States */
+    & > .option-list--option-highlighted {
+        background: #062810;
+        color: #70c888;
+        text-style: bold;
+    }
+    & > .option-list--option-hover,
+    & > .option-list--option-hover-highlighted,
+    &:focus > .option-list--option-hover-highlighted {
+        background: #0c4020;
+        color: #a0f0b8;
+        text-style: bold;
+    }
+}
+
+/* Buttons */
+.button_container {
+    height: auto;
+    width: 100%;
+    align-horizontal: center;
+    margin-top: 1;
+}
+
+Button {
+    background: #082c14;
+    border-top: tall #1a6038;
+    border-bottom: tall #041408;
+
+    &:hover {
+        background: #0c3a1c;
+        border-top: tall #228048;
+    }
+    &:focus {
+        background: #0c3a1c;
+        border-top: tall #228048;
+        text-style: bold;
+    }
+
+    &.-primary {
+        background: #03501e;
+        border-top: tall #0b8238;
+        border-bottom: tall #022810;
+
+        &:hover {
+            background: #046828;
+            border-top: tall #10a048;
+        }
+        &:focus {
+            background: #046828;
+            border-top: tall #10a048;
+            text-style: bold;
+        }
+    }
+}
+
+/* Switches & Toggles */
+.switch_container {
+    align: center top;
+    margin: 1 0;
+    height: auto;
+
+    & > Label {
+        color: #98dca8;
+        padding-left: 1;
+        text-style: bold;
+    }
+}
+
+Switch {
+    background: #020a04;
+    border: none #0c5028;
+
+    &:focus { background-tint: transparent; }
+
+    & > .switch--slider {
+        color: #126030;
+        background: #041a0a;
+    }
+    /* Combined focus/hover slider states */
+    &:focus > .switch--slider,
+    &:hover > .switch--slider {
+        color: #fd8383;
+    }
+
+    &.-on {
+        & > .switch--slider { color: #1aa050; }
+        &:focus > .switch--slider,
+        &:hover > .switch--slider {
+            color: #3df28a;
+        }
+    }
+}
+
+Checkbox {
+    background: #031208;
+    border: none;
+    padding-left: 2;
+    padding-bottom: 1;
+    content-align: left middle;
+
+    & .toggle--button {
+        color: #031208;
+        text-style: bold;
+        background: #0c4020;
+    }
+}
+
+RadioSet {
+    background: transparent;
+    border: none;
+    layout: horizontal;
+    width: 100%;
+
+    &:focus {
+        background-tint: transparent;
+
+        & > RadioButton.-selected > .toggle--label {
+            text-style: bold;
+            color: #70d090;
+        }
+
+        & > .toggle--label {
+            text-style: bold;
+        }
+    }
+}
+
+RadioButton {
+    background: transparent;
+    margin-right: 2;
+    width: auto;
+
+    & > .toggle--label {
+        background: transparent !important;
+    }
+
+    & > .toggle--button {
+        color: #031208;
+        background: #0c4020;
+    }
+}
+
+ToggleButton {
+    background: transparent !important;
+    &:focus, &:hover {
+        background-tint: transparent;
+        & > .toggle--label {
+            text-style: bold;
+            color: #70d090;
+            background: transparent !important;
+        }
+    }
+    &.-on {
+        background: transparent;
+        & > .toggle--button {
+            text-style: bold;
+            color: #40f090;
+            background: #085020;
+        }
+    }
+}
+/* Sparklines */
+Sparkline {
+    margin: 1 0;
+    & > .sparkline--max-color { color: #48b070; }
+    & > .sparkline--min-color { color: #105028; }
+}
+
+.pad_top_1 { margin-top: 1; }
+.pad_bottom_1 { margin-bottom: 1; }
